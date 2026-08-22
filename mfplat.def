@@ -1,0 +1,5 @@
+LIBRARY MFPLAT.dll
+EXPORTS
+ MFStartup
+ MFShutdown
+ MFCreateMediaType

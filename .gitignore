@@ -1,0 +1,22 @@
+# Build outputs
+*.obj
+*.lib
+*_stub.dll
+*.pdb
+*.ilk
+*.exp
+OzAmp-*.exe
+
+# Local runtime state
+ozamp.ini
+ozamp_stats.ini
+ozamp_library.dat
+*.m3u
+*.m3u8
+
+# Editor / OS
+.vs/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

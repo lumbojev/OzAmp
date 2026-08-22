@@ -1,0 +1,7 @@
+LIBRARY GDIPLUS.dll
+EXPORTS
+ GdiplusStartup
+ GdiplusShutdown
+ GdipLoadImageFromFile
+ GdipCreateHBITMAPFromBitmap
+ GdipDisposeImage

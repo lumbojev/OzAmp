@@ -1,0 +1,8 @@
+LIBRARY MSACM32.dll
+EXPORTS
+ acmStreamOpen
+ acmStreamClose
+ acmStreamSize
+ acmStreamPrepareHeader
+ acmStreamUnprepareHeader
+ acmStreamConvert

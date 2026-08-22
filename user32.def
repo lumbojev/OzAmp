@@ -1,0 +1,59 @@
+LIBRARY USER32.dll
+EXPORTS
+ RegisterClassExW
+ CreateWindowExW
+ DefWindowProcW
+ ShowWindow
+ UpdateWindow
+ GetMessageW
+ TranslateMessage
+ DispatchMessageW
+ PostQuitMessage
+ BeginPaint
+ EndPaint
+ GetClientRect
+ GetWindowRect
+ InvalidateRect
+ SetTimer
+ KillTimer
+ LoadCursorW
+ LoadIconW
+ SetCapture
+ ReleaseCapture
+ GetCursorPos
+ ScreenToClient
+ SetWindowPos
+ MoveWindow
+ MessageBoxW
+ DrawTextW
+ FillRect
+ SetForegroundWindow
+ SetFocus
+ DestroyWindow
+ CreatePopupMenu
+ AppendMenuW
+ TrackPopupMenu
+ DestroyMenu
+ OpenClipboard
+ EmptyClipboard
+ SetClipboardData
+ CloseClipboard
+ SetProcessDPIAware
+ IsWindowVisible
+ SetWindowTextW
+ GetKeyState
+ RegisterHotKey
+ UnregisterHotKey
+
+ GetWindowTextW
+
+ EnableWindow
+
+ GetSystemMetrics
+
+ SendMessageW
+ SetWindowRgn
+
+ MonitorFromWindow
+
+ GetMonitorInfoW

@@ -1,0 +1,8 @@
+LIBRARY MSVCRT.dll
+EXPORTS
+ sin
+ cos
+ sqrt
+ log10
+ pow
+ fabs

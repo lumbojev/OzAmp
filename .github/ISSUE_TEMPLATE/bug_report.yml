@@ -1,0 +1,47 @@
+name: Bug report
+description: Report a reproducible problem in OzAmp
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report a problem.
+  - type: input
+    id: version
+    attributes:
+      label: OzAmp version
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: dropdown
+    id: windows
+    attributes:
+      label: Windows version
+      options:
+        - Windows 11
+        - Windows 10
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the problem and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open...
+        2. Click...
+        3. Observe...
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Additional details
+      description: Audio format, output device, screenshots or other useful context.

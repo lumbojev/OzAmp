@@ -1,0 +1,17 @@
+; OzAmp 3.0 external skin example
+[colors]
+bg=#160D09
+panel=#24140E
+panel2=#321B12
+edge=#70412C
+text=#F1DED2
+muted=#AE8A73
+accent=#D4773F
+led=#FFC079
+led2=#E69253
+danger=#E45B64
+black=#080402
+
+[fonts]
+ui=Segoe UI
+led=Consolas
