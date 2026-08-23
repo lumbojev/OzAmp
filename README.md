@@ -99,6 +99,7 @@ A GitHub Actions workflow in `.github/workflows/build-windows.yml` performs the 
 | `main.cpp` | Win32 application, UI, playlist, queue and persistence |
 | `audio_engine.cpp/.h` | WASAPI / Media Foundation playback and PCM processing |
 | `winlite.h` | Compact Windows ABI/header surface used by the project |
+| `ozamp.ico` / `ozamp.res` | Application icon and compiled Windows resource |
 | `skins/` | Bundled `.ozskin` themes |
 | `docs/ARCHITECTURE.md` | High-level implementation overview |
 | `TEST_CHECKLIST.md` | Release smoke-test checklist |

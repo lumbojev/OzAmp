@@ -12,3 +12,6 @@
 - Playlist docking, resize behavior and EQ-preset persistence stabilized during the 3.5.x development line.
 - Repository documentation and Windows CI prepared for public GitHub release.
 - Project licensed under the MIT License.
+
+### Presentation update
+- Added a native multi-resolution OzAmp application icon for Explorer, taskbar, window classes and tray icon.
