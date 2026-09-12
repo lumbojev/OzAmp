@@ -1,3 +1,19 @@
+> See [changes since 1.0.0](PACKAGE_NOTES.md) and the [Windows test checklist](TEST38_NOTES.md). The supplied EXE is TEST38; the Windows release updater selects the public version and rebuilds it through CI.
+
+## Karaoke lyrics view — TEST38
+
+Click **KARAOKE** beside Lyrics in the Spotify workspace to show large centered lyrics in the same window. Click the same button again to restore the library and sidebar lyrics with the previous tab, search text and list position. Transport controls remain available; mode changes send no playback/restart commands.
+
+Timed lyrics highlight the current line; plain lyrics remain manually scrollable without fake timing. Scroll to browse, then click Sync to resume following. This is a lyric presentation mode, not vocal removal or word-level karaoke. Clicking a library tab exits karaoke. F11/Esc retains its existing return-to-normal-player behavior.
+
+## Spotify and fullscreen workspace
+
+Connect through **F10 → Spotify** using your Client ID. Connection preserves your normal player and side windows. **F11 / F8** or **SPOTIFY / FULLSCREEN** opens the unified workspace; **Esc / Normal Player** returns without restarting playback.
+
+Recent, Playlists, Queue and Devices share one window with album art, track details, synchronized lyrics and a bottom transport bar. Search filters loaded items; Load More retrieves additional supported pages. Scroll lyrics manually and click Sync to resume following. Spotify audio stays in Spotify, so OzAmp's local EQ does not affect it.
+
+Client ID persists; saved login is encrypted with Windows DPAPI. Disconnect removes the saved session. Optional Spotify, lyrics, online artwork and update checks use network services; local playback remains available without a Spotify account. See [privacy details](SECURITY_AND_PRIVACY.md).
+
 <p align="center">
   <img src="docs/assets/ozamp-banner.png" alt="OzAmp — native Windows audio player" width="100%">
 </p>
@@ -33,7 +49,7 @@
 ## Screenshot
 
 <p align="center">
-  <img src="docs/assets/ozamp-screenshot.png" alt="OzAmp 1.0.0 running on Windows" width="720">
+  <img src="docs/assets/ozamp-screenshot.png" alt="OzAmp 1.0.1 running on Windows" width="720">
 </p>
 
 ## Why OzAmp?
@@ -58,23 +74,39 @@ It is deliberately built as a native Windows desktop application rather than a b
 - `.ozskin` skin support
 - No account requirement, telemetry or analytics
 
-## Download
+<!-- OZAMP_CURRENT_RELEASE_START -->
+## Current release — 1.0.1
 
+OzAmp **1.0.1** is the current stable release.
+
+**[Download OzAmp 1.0.1 →](https://github.com/lumbojev/OzAmp/releases/tag/v1.0.1)**
+
+### What changed since 1.0.0
+
+- Latest tested OzAmp source promoted to a stable GitHub release
+- Application, build script and Windows CI version synchronized to **1.0.1**
+- **24** repository paths changed since the previous stable tag
+- Release notes, changelog, checksum and source archive regenerated for this release
+
+For the complete change list, see [RELEASE_NOTES.md](RELEASE_NOTES.md) and [CHANGELOG.md](CHANGELOG.md).
+<!-- OZAMP_CURRENT_RELEASE_END -->
+
+## Download
 ### Windows x64
 
 The recommended way to install or update OzAmp is through the latest GitHub release:
 
 **[Download the latest OzAmp release →](https://github.com/lumbojev/OzAmp/releases/latest)**
 
-For v1.0.0 specifically:
+For v1.0.1 specifically:
 
-**[Download OzAmp-1.0.0.exe](https://github.com/lumbojev/OzAmp/releases/download/v1.0.0/OzAmp-1.0.0.exe)**
+**[Download OzAmp-1.0.1.exe](https://github.com/lumbojev/OzAmp/releases/download/v1.0.1/OzAmp-1.0.1.exe)**
 
 > Windows may show a SmartScreen warning for an unsigned independent executable. Verify the SHA-256 checksum published with the release if desired.
 
 ## Platform
 
-OzAmp 1.0.0 targets **64-bit Windows**. Windows 10 and Windows 11 are the intended desktop environments.
+OzAmp 1.0.1 targets **64-bit Windows**. Windows 10 and Windows 11 are the intended desktop environments.
 
 ## Build from source
 
@@ -87,7 +119,7 @@ build_windows_llvm.bat
 Expected output:
 
 ```text
-OzAmp-1.0.0.exe
+OzAmp-1.0.1.exe
 ```
 
 A GitHub Actions workflow in `.github/workflows/build-windows.yml` performs the same Windows x64 build in CI.

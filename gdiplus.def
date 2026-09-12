@@ -5,3 +5,9 @@ EXPORTS
  GdipLoadImageFromFile
  GdipCreateHBITMAPFromBitmap
  GdipDisposeImage
+ GdipGetImageWidth
+ GdipGetImageHeight
+ GdipCreateFromHDC
+ GdipDeleteGraphics
+ GdipDrawImageRectI
+ GdipSetInterpolationMode

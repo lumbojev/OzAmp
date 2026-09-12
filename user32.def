@@ -57,3 +57,7 @@ EXPORTS
  MonitorFromWindow
 
  GetMonitorInfoW
+ ChangeWindowMessageFilter
+ FindWindowW
+
+ PostMessageW

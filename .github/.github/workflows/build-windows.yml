@@ -5,7 +5,18 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
+  browser-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tests/test_spotify.py
+      - run: python3 tests/test_workspace.py
+      - run: python3 tests/test_workspace_state.py
+
   build:
     runs-on: windows-latest
     steps:
@@ -23,13 +34,17 @@ jobs:
         shell: cmd
         run: build_windows_llvm.bat
 
+      - name: Test saved Spotify session (offline DPAPI integration)
+        shell: cmd
+        run: tests\build_windows_tests.bat
+
       - name: Verify executable
         shell: powershell
         run: |
-          if (-not (Test-Path .\OzAmp-1.0.1.exe)) { throw "OzAmp executable missing" }
-          Get-FileHash .\OzAmp-1.0.1.exe -Algorithm SHA256
+          if (-not (Test-Path .\OzAmp-1.1.0-TEST38.exe)) { throw "OzAmp executable missing" }
+          Get-FileHash .\OzAmp-1.1.0-TEST38.exe -Algorithm SHA256
 
       - uses: actions/upload-artifact@v4
         with:
-          name: OzAmp-1.0.1-windows-x64
-          path: OzAmp-1.0.1.exe
+          name: OzAmp-1.1.0-TEST38-windows-x64
+          path: OzAmp-1.1.0-TEST38.exe

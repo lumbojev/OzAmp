@@ -9,6 +9,7 @@
 #endif
 
 #define NULLPTR ((void*)0)
+#define ERROR_ALREADY_EXISTS 183
 
 typedef void* HANDLE;
 typedef void* HWND;
@@ -25,12 +26,14 @@ typedef void* HMENU;
 typedef void* HDROP;
 typedef void* HGLOBAL;
 typedef void* HMODULE;
+typedef void* HKEY;
 typedef void* HMONITOR;
 typedef void* HGDIOBJ;
 typedef unsigned char BYTE;
 typedef unsigned short WORD;
 typedef unsigned int UINT;
 typedef unsigned long DWORD;
+typedef unsigned char BOOLEAN;
 typedef long LONG;
 typedef int BOOL;
 typedef unsigned long long ULONG_PTR;
@@ -47,8 +50,22 @@ typedef void* LPVOID;
 typedef long long LONG_PTR;
 typedef unsigned long long UINT_PTR;
 typedef unsigned long long SIZE_T;
+extern "C" __declspec(dllimport) void* WINAPI GetProcAddress(HMODULE,const char*);
+extern "C" __declspec(dllimport) HMODULE WINAPI LoadLibraryW(LPCWSTR);
 typedef unsigned long long ULONGLONG;
 typedef long long LONGLONG;
+
+// Winsock subset for Spotify OAuth loopback callback.
+typedef unsigned long long SOCKET;
+struct IN_ADDR { unsigned long s_addr; };
+struct SOCKADDR { unsigned short sa_family; char sa_data[14]; };
+struct SOCKADDR_IN { short sin_family; unsigned short sin_port; IN_ADDR sin_addr; char sin_zero[8]; };
+struct WSADATA { WORD wVersion; WORD wHighVersion; unsigned short iMaxSockets; unsigned short iMaxUdpDg; char* lpVendorInfo; char szDescription[257]; char szSystemStatus[129]; };
+#define INVALID_SOCKET ((SOCKET)(~0ULL))
+#define SOCKET_ERROR (-1)
+#define AF_INET 2
+#define SOCK_STREAM 1
+#define IPPROTO_TCP 6
 
 typedef LRESULT (CALLBACK *WNDPROC)(HWND,UINT,WPARAM,LPARAM);
 
@@ -57,8 +74,10 @@ struct RECT { LONG left, top, right, bottom; };
 struct WINDOWPOS { HWND hwnd; HWND hwndInsertAfter; int x; int y; int cx; int cy; UINT flags; };
 struct MONITORINFO { DWORD cbSize; RECT rcMonitor; RECT rcWork; DWORD dwFlags; };
 struct FILETIME { DWORD dwLowDateTime, dwHighDateTime; };
+struct SYSTEMTIME { WORD wYear,wMonth,wDayOfWeek,wDay,wHour,wMinute,wSecond,wMilliseconds; };
 struct PAINTSTRUCT { HDC hdc; BOOL fErase; RECT rcPaint; BOOL fRestore; BOOL fIncUpdate; BYTE rgbReserved[32]; };
 struct MSG { HWND hwnd; UINT message; WPARAM wParam; LPARAM lParam; DWORD time; POINT pt; DWORD lPrivate; };
+struct COPYDATASTRUCT { ULONG_PTR dwData; DWORD cbData; void* lpData; };
 struct WNDCLASSEXW {
     UINT cbSize; UINT style; WNDPROC lpfnWndProc; int cbClsExtra; int cbWndExtra;
     HINSTANCE hInstance; HICON hIcon; HCURSOR hCursor; HBRUSH hbrBackground;
@@ -81,10 +100,19 @@ struct SIZEW { LONG cx; LONG cy; };
 struct BITMAPW { LONG bmType; LONG bmWidth; LONG bmHeight; LONG bmWidthBytes; WORD bmPlanes; WORD bmBitsPixel; LPVOID bmBits; };
 struct GDIPLUS_STARTUP_INPUT { UINT GdiplusVersion; void* DebugEventCallback; BOOL SuppressBackgroundThread; BOOL SuppressExternalCodecs; };
 
+
+#define KEY_QUERY_VALUE 0x0001
+#define KEY_SET_VALUE 0x0002
+#define KEY_CREATE_SUB_KEY 0x0004
+#define REG_OPTION_NON_VOLATILE 0x00000000
+#define REG_SZ 1
+#define ERROR_SUCCESS 0
+#define HKEY_CURRENT_USER ((HKEY)(ULONG_PTR)0x80000001ULL)
 #define TRUE 1
 #define FALSE 0
 #define MAX_PATH 260
 #define INVALID_HANDLE_VALUE ((HANDLE)(LONG_PTR)-1)
+#define FILE_CURRENT 1
 
 #define CS_HREDRAW 0x0002
 #define CS_VREDRAW 0x0001
@@ -113,6 +141,7 @@ struct GDIPLUS_STARTUP_INPUT { UINT GdiplusVersion; void* DebugEventCallback; BO
 #define WM_DESTROY 0x0002
 #define WM_MOVE 0x0003
 #define WM_WINDOWPOSCHANGING 0x0046
+#define WM_COPYDATA 0x004A
 #define WM_SIZE 0x0005
 #define WM_SETFOCUS 0x0007
 #define WM_PAINT 0x000F
@@ -124,6 +153,7 @@ struct GDIPLUS_STARTUP_INPUT { UINT GdiplusVersion; void* DebugEventCallback; BO
 #define WM_NCLBUTTONDBLCLK 0x00A3
 #define WM_CONTEXTMENU 0x007B
 #define WM_KEYDOWN 0x0100
+#define WM_SYSKEYDOWN 0x0104
 #define WM_CHAR 0x0102
 #define WM_TIMER 0x0113
 #define WM_COMMAND 0x0111
@@ -155,6 +185,8 @@ struct GDIPLUS_STARTUP_INPUT { UINT GdiplusVersion; void* DebugEventCallback; BO
 #define VK_LEFT 0x25
 #define VK_RIGHT 0x27
 #define VK_F5 0x74
+#define VK_F8 0x77
+#define VK_F9 0x78
 #define VK_F10 0x79
 #define VK_RETURN 0x0D
 #define VK_DELETE 0x2E
@@ -171,6 +203,23 @@ struct GDIPLUS_STARTUP_INPUT { UINT GdiplusVersion; void* DebugEventCallback; BO
 
 #define HTCLIENT 1
 #define HTCAPTION 2
+#define HTLEFT 10
+#define HTRIGHT 11
+#define HTTOP 12
+#define HTTOPLEFT 13
+#define HTTOPRIGHT 14
+#define HTBOTTOM 15
+#define HTBOTTOMLEFT 16
+#define HTBOTTOMRIGHT 17
+
+#define WMSZ_LEFT 1
+#define WMSZ_RIGHT 2
+#define WMSZ_TOP 3
+#define WMSZ_TOPLEFT 4
+#define WMSZ_TOPRIGHT 5
+#define WMSZ_BOTTOM 6
+#define WMSZ_BOTTOMLEFT 7
+#define WMSZ_BOTTOMRIGHT 8
 
 #define IDC_ARROW ((LPCWSTR)32512)
 #define IDI_APPLICATION ((LPCWSTR)32512)
@@ -183,6 +232,7 @@ struct GDIPLUS_STARTUP_INPUT { UINT GdiplusVersion; void* DebugEventCallback; BO
 #define DT_END_ELLIPSIS 0x00008000
 #define DT_NOPREFIX 0x00000800
 #define DT_WORDBREAK 0x00000010
+#define DT_CALCRECT 0x00000400
 
 #define TRANSPARENT 1
 #define OPAQUE 2
@@ -248,12 +298,16 @@ __declspec(dllimport) LPWSTR WINAPI GetCommandLineW();
 __declspec(dllimport) HGLOBAL WINAPI LocalFree(HGLOBAL);
 __declspec(dllimport) void WINAPI ExitProcess(UINT);
 __declspec(dllimport) ULONGLONG WINAPI GetTickCount64();
+__declspec(dllimport) void WINAPI GetSystemTimeAsFileTime(FILETIME*);
+__declspec(dllimport) void WINAPI GetLocalTime(SYSTEMTIME*);
 __declspec(dllimport) DWORD WINAPI GetEnvironmentVariableW(LPCWSTR,LPWSTR,DWORD);
 __declspec(dllimport) BOOL WINAPI CreateDirectoryW(LPCWSTR,void*);
 __declspec(dllimport) HANDLE WINAPI CreateFileW(LPCWSTR,DWORD,DWORD,void*,DWORD,DWORD,HANDLE);
 __declspec(dllimport) BOOL WINAPI ReadFile(HANDLE,LPVOID,DWORD,DWORD*,void*);
 __declspec(dllimport) BOOL WINAPI WriteFile(HANDLE,LPCVOID,DWORD,DWORD*,void*);
 __declspec(dllimport) BOOL WINAPI CloseHandle(HANDLE);
+__declspec(dllimport) HANDLE WINAPI CreateMutexW(void*,BOOL,LPCWSTR);
+__declspec(dllimport) DWORD WINAPI GetLastError();
 __declspec(dllimport) DWORD WINAPI SetFilePointer(HANDLE,LONG,LONG*,DWORD);
 __declspec(dllimport) DWORD WINAPI GetFileSize(HANDLE,DWORD*);
 __declspec(dllimport) DWORD WINAPI GetFileAttributesW(LPCWSTR);
@@ -267,6 +321,7 @@ __declspec(dllimport) DWORD WINAPI GetPrivateProfileIntW(LPCWSTR,LPCWSTR,int,LPC
 __declspec(dllimport) DWORD WINAPI GetPrivateProfileStringW(LPCWSTR,LPCWSTR,LPCWSTR,LPWSTR,DWORD,LPCWSTR);
 __declspec(dllimport) BOOL WINAPI WritePrivateProfileStringW(LPCWSTR,LPCWSTR,LPCWSTR,LPCWSTR);
 __declspec(dllimport) HGLOBAL WINAPI GlobalAlloc(UINT,SIZE_T);
+__declspec(dllimport) HGLOBAL WINAPI GlobalFree(HGLOBAL);
 __declspec(dllimport) LPVOID WINAPI GlobalLock(HGLOBAL);
 __declspec(dllimport) BOOL WINAPI GlobalUnlock(HGLOBAL);
 
@@ -321,6 +376,8 @@ __declspec(dllimport) int WINAPI GetSystemMetrics(int);
 __declspec(dllimport) HMONITOR WINAPI MonitorFromWindow(HWND,DWORD);
 __declspec(dllimport) BOOL WINAPI GetMonitorInfoW(HMONITOR,MONITORINFO*);
 __declspec(dllimport) LRESULT WINAPI SendMessageW(HWND,UINT,WPARAM,LPARAM);
+__declspec(dllimport) BOOL WINAPI PostMessageW(HWND,UINT,WPARAM,LPARAM);
+__declspec(dllimport) HWND WINAPI FindWindowW(LPCWSTR,LPCWSTR);
 __declspec(dllimport) short WINAPI GetKeyState(int);
 
 __declspec(dllimport) HBRUSH WINAPI CreateSolidBrush(DWORD);
@@ -344,12 +401,14 @@ __declspec(dllimport) int WINAPI GetObjectW(HGDIOBJ,int,LPVOID);
 __declspec(dllimport) BOOL WINAPI GetOpenFileNameW(OPENFILENAMEW*);
 __declspec(dllimport) BOOL WINAPI GetSaveFileNameW(OPENFILENAMEW*);
 
+__declspec(dllimport) BOOL WINAPI ChangeWindowMessageFilter(UINT,DWORD);
 __declspec(dllimport) void WINAPI DragAcceptFiles(HWND,BOOL);
 __declspec(dllimport) UINT WINAPI DragQueryFileW(HDROP,UINT,LPWSTR,UINT);
 __declspec(dllimport) void WINAPI DragFinish(HDROP);
 __declspec(dllimport) void* WINAPI SHBrowseForFolderW(BROWSEINFOW*);
 __declspec(dllimport) BOOL WINAPI SHGetPathFromIDListW(const void*,LPWSTR);
 __declspec(dllimport) HINSTANCE WINAPI ShellExecuteW(HWND,LPCWSTR,LPCWSTR,LPCWSTR,LPCWSTR,int);
+__declspec(dllimport) void WINAPI SHChangeNotify(LONG,UINT,LPCVOID,LPCVOID);
 __declspec(dllimport) LPWSTR* WINAPI CommandLineToArgvW(LPCWSTR,int*);
 
 __declspec(dllimport) void WINAPI CoTaskMemFree(LPVOID);
@@ -360,11 +419,26 @@ __declspec(dllimport) BOOL WINAPI mciGetErrorStringW(DWORD,LPWSTR,UINT);
 
 
 extern "C" {
+__declspec(dllimport) LONG WINAPI RegCreateKeyExW(HKEY,LPCWSTR,DWORD,LPWSTR,DWORD,DWORD,LPVOID,HKEY*,DWORD*);
+__declspec(dllimport) LONG WINAPI RegOpenKeyExW(HKEY,LPCWSTR,DWORD,DWORD,HKEY*);
+__declspec(dllimport) LONG WINAPI RegQueryValueExW(HKEY,LPCWSTR,DWORD*,DWORD*,BYTE*,DWORD*);
+__declspec(dllimport) LONG WINAPI RegSetValueExW(HKEY,LPCWSTR,DWORD,DWORD,const BYTE*,DWORD);
+__declspec(dllimport) LONG WINAPI RegCloseKey(HKEY);
+__declspec(dllimport) LONG WINAPI RegDeleteTreeW(HKEY,LPCWSTR);
+}
+
+extern "C" {
 __declspec(dllimport) int WINAPI GdiplusStartup(ULONG_PTR*,const GDIPLUS_STARTUP_INPUT*,void*);
 __declspec(dllimport) void WINAPI GdiplusShutdown(ULONG_PTR);
 __declspec(dllimport) int WINAPI GdipLoadImageFromFile(LPCWSTR,void**);
 __declspec(dllimport) int WINAPI GdipCreateHBITMAPFromBitmap(void*,HBITMAP*,DWORD);
 __declspec(dllimport) int WINAPI GdipDisposeImage(void*);
+__declspec(dllimport) int WINAPI GdipGetImageWidth(void*,UINT*);
+__declspec(dllimport) int WINAPI GdipGetImageHeight(void*,UINT*);
+__declspec(dllimport) int WINAPI GdipCreateFromHDC(HDC,void**);
+__declspec(dllimport) int WINAPI GdipDeleteGraphics(void*);
+__declspec(dllimport) int WINAPI GdipDrawImageRectI(void*,void*,int,int,int,int);
+__declspec(dllimport) int WINAPI GdipSetInterpolationMode(void*,int);
 }
 
 static inline DWORD RGBc(BYTE r,BYTE g,BYTE b){ return ((DWORD)r)|((DWORD)g<<8)|((DWORD)b<<16); }
@@ -488,6 +562,36 @@ __declspec(dllimport) double __cdecl pow(double,double);
 __declspec(dllimport) double __cdecl fabs(double);
 }
 
+
+// WinHTTP (OzAmp lyrics lookup).
+typedef void* HINTERNET;
+#define WINHTTP_ACCESS_TYPE_DEFAULT_PROXY 0
+#define WINHTTP_NO_PROXY_NAME 0
+#define WINHTTP_NO_PROXY_BYPASS 0
+#define WINHTTP_FLAG_SECURE 0x00800000
+#define INTERNET_DEFAULT_HTTPS_PORT 443
+extern "C" {
+__declspec(dllimport) HINTERNET WINAPI WinHttpOpen(LPCWSTR,DWORD,LPCWSTR,LPCWSTR,DWORD);
+__declspec(dllimport) HINTERNET WINAPI WinHttpConnect(HINTERNET,LPCWSTR,WORD,DWORD);
+__declspec(dllimport) HINTERNET WINAPI WinHttpOpenRequest(HINTERNET,LPCWSTR,LPCWSTR,LPCWSTR,LPCWSTR,const LPCWSTR*,DWORD);
+__declspec(dllimport) BOOL WINAPI WinHttpSendRequest(HINTERNET,LPCWSTR,DWORD,LPVOID,DWORD,DWORD,DWORD_PTR);
+__declspec(dllimport) BOOL WINAPI WinHttpReceiveResponse(HINTERNET,LPVOID);
+__declspec(dllimport) BOOL WINAPI WinHttpQueryDataAvailable(HINTERNET,DWORD*);
+__declspec(dllimport) BOOL WINAPI WinHttpReadData(HINTERNET,LPVOID,DWORD,DWORD*);
+__declspec(dllimport) BOOL WINAPI WinHttpCloseHandle(HINTERNET);
+__declspec(dllimport) BOOL WINAPI WinHttpSetTimeouts(HINTERNET,int,int,int,int);
+__declspec(dllimport) BOOLEAN WINAPI SystemFunction036(void*,ULONG);
+__declspec(dllimport) int WINAPI WSAStartup(WORD,WSADATA*);
+__declspec(dllimport) int WINAPI WSACleanup();
+__declspec(dllimport) SOCKET WINAPI socket(int,int,int);
+__declspec(dllimport) int WINAPI bind(SOCKET,const SOCKADDR*,int);
+__declspec(dllimport) int WINAPI listen(SOCKET,int);
+__declspec(dllimport) SOCKET WINAPI accept(SOCKET,SOCKADDR*,int*);
+__declspec(dllimport) int WINAPI recv(SOCKET,char*,int,int);
+__declspec(dllimport) int WINAPI send(SOCKET,const char*,int,int);
+__declspec(dllimport) int WINAPI closesocket(SOCKET);
+}
+
 // Media Foundation decoding (OzAmp 3.0).
 #define MF_VERSION 0x00020070
 #define MFSTARTUP_FULL 0
@@ -501,3 +605,5 @@ __declspec(dllimport) HRESULT WINAPI MFShutdown();
 __declspec(dllimport) HRESULT WINAPI MFCreateMediaType(void**);
 __declspec(dllimport) HRESULT WINAPI MFCreateSourceReaderFromURL(LPCWSTR,void*,void**);
 }
+
+extern "C" __declspec(dllimport) BOOL WINAPI WinHttpQueryHeaders(HINTERNET,DWORD,LPCWSTR,LPVOID,DWORD*,DWORD*);

@@ -1,0 +1,10 @@
+LIBRARY advapi32
+EXPORTS
+RegCreateKeyExW
+RegSetValueExW
+RegCloseKey
+RegDeleteTreeW
+RegOpenKeyExW
+RegQueryValueExW
+
+SystemFunction036

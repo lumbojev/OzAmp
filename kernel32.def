@@ -1,5 +1,7 @@
 LIBRARY KERNEL32.dll
 EXPORTS
+ GetProcAddress
+ LoadLibraryW
  GetModuleHandleW
  ExitProcess
  GetTickCount64
@@ -22,6 +24,7 @@ EXPORTS
  GetPrivateProfileStringW
  WritePrivateProfileStringW
  GlobalAlloc
+ GlobalFree
  GlobalLock
  GlobalUnlock
  GetCommandLineW
@@ -35,3 +38,9 @@ EXPORTS
  DeleteFileW
  CreateProcessW
  WaitForSingleObject
+ CreateMutexW
+ GetLastError
+ GetSystemTimeAsFileTime
+ GetLocalTime
+ MoveFileExW
+ FlushFileBuffers

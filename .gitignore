@@ -20,3 +20,13 @@ ozamp_library.dat
 .idea/
 .DS_Store
 Thumbs.db
+
+# Personal Spotify state
+*.dpapi
+*.dpapi.tmp
+ozamp.ini
+
+# Local build outputs
+*.obj
+*.lib
+*_stub.dll
