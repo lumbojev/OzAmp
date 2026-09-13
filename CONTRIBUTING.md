@@ -4,7 +4,7 @@ Thanks for your interest in OzAmp.
 
 ## Before submitting a change
 
-1. Build `OzAmp-1.0.0.exe` successfully with `build_windows_llvm.bat`.
+1. Build the versioned `OzAmp-X.Y.Z.exe` successfully with `build_windows_llvm.bat`.
 2. Run the relevant checks in `TEST_CHECKLIST.md` on Windows.
 3. Keep UI changes consistent with the existing OzAmp visual language.
 4. Avoid adding telemetry, accounts or network dependencies without explicit project discussion.

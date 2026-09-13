@@ -1,4 +1,4 @@
-# OzAmp 1.0.0 Windows release smoke test
+# OzAmp Windows release smoke test
 
 ## Startup and persistence
 - [ ] Start OzAmp on Windows 11 without errors.

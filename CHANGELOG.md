@@ -1,5 +1,77 @@
 # Changelog
 
+## 1.0.2 — Stable release
+
+This release rolls the latest tested package into the public stable line and includes **33 changed repository paths** since the previous stable release. Full package notes and the exact file inventory are recorded below.
+
+### What's new
+
+## Windows compatibility metadata
+
+- Added an embedded application manifest declaring Windows 10/11 compatibility and normal-user execution (asInvoker).
+- Added native FileVersion, ProductVersion, product name and original executable filename resources.
+- Kept the existing system-DPI default and Spotify's per-monitor window handling.
+- Regenerate all application resources on every build and validate the resources extracted from the linked executable. A missing manifest or version mismatch fails the build.
+
+## GitHub release preparation
+
+- Copy every source file to its exact relative destination, including existing docs, tools, skins and workflow directories.
+- Repair known doubled directories created by the previous updater; preserve and stop on unknown files rather than deleting them.
+- Preserve archived release logs and older changelog entries from GitHub. Audit active app/source/docs while allowing numbered development references in historical records and clearly marked Git inventories.
+- Preserve the final newline and trailing whitespace of archived changelog entries. Fix the "Older changelog section changed" self-test failure without weakening the preservation check.
+- Insert release-note text literally, including dollar signs, and check repeat preparation with LF, CRLF, missing final newlines, trailing whitespace, pending entries and Unreleased sections.
+- Synchronize app, manifest, build output, CI metadata and README versions to the next stable tag selected from GitHub.
+- Configure line endings within the temporary checkout and avoid pager pauses.
+- Run offline regression checks in the installed Windows PowerShell before any GitHub operation.
+
+## Existing features retained
+
+Spotify Recent / Playlists / Queue / Devices, persistent Client ID and encrypted saved login, lyrics, artwork, karaoke, the native large workspace, local playback and EQ remain available. See CHANGELOG.md for the full earlier release history.
+
+## Validation scope
+
+The Windows x64 executable is cross-built and its embedded resource tree is inspected locally. Resource fixtures, browser behavior, window state and layout tests are automated. The original changelog failure was reproduced with PowerShell 7.4.19 on Linux, and the corrected updater's complete offline self-test passes in that runtime. Windows PowerShell 5.1 and the Windows Compatibility Assistant dialog have not been run here; the same offline self-test executes on the publishing Windows machine before the updater contacts GitHub.
+
+### Complete change inventory since 1.0.1
+
+<!-- OZAMP_HISTORY_START -->
+- **Modified:** `.gitattributes`
+- **Removed:** `.github/.github/ISSUE_TEMPLATE/bug_report.yml`
+- **Removed:** `.github/.github/ISSUE_TEMPLATE/feature_request.yml`
+- **Removed:** `.github/.github/PULL_REQUEST_TEMPLATE.md`
+- **Removed:** `.github/.github/workflows/build-windows.yml`
+- **Modified:** `.github/workflows/build-windows.yml`
+- **Modified:** `CONTRIBUTING.md`
+- **Modified:** `FEATURES.md`
+- **Removed:** `GITHUB_POLISH_UPDATE.md`
+- **Removed:** `GITHUB_RELEASE_CHECKLIST.md`
+- **Modified:** `PACKAGE_NOTES.md`
+- **Modified:** `README.md`
+- **Modified:** `RELEASE_NOTES.md`
+- **Removed:** `RELEASE_PREPARATION.md`
+- **Removed:** `TEST1_NOTES.md`
+- **Removed:** `TEST38_NOTES.md`
+- **Modified:** `TEST_CHECKLIST.md`
+- **Modified:** `build_linux_cross.sh`
+- **Modified:** `build_windows_llvm.bat`
+- **Removed:** `docs/docs/ARCHITECTURE.md`
+- **Removed:** `docs/docs/assets/ozamp-banner.png`
+- **Removed:** `docs/docs/assets/ozamp-screenshot.png`
+- **Modified:** `main.cpp`
+- **Added:** `ozamp.manifest`
+- **Modified:** `ozamp.rc`
+- **Modified:** `ozamp.res`
+- **Removed:** `skins/skins/AmigaGreen.ozskin`
+- **Removed:** `skins/skins/HotCopper.ozskin`
+- **Removed:** `skins/skins/NordicFrost.ozskin`
+- **Added:** `tests/test_resources.py`
+- **Modified:** `tools/make_icon_res.py`
+- **Removed:** `tools/tools/make_icon_res.py`
+- **Added:** `tools/verify_exe.py`
+<!-- OZAMP_HISTORY_END -->
+
+---
+
 ## 1.0.1 — Stable release
 
 This release rolls the latest tested package into the public stable line and includes **24 changed repository paths** since the previous stable release. Full package notes and the exact file inventory are recorded below.
@@ -149,46 +221,6 @@ Spotify audio remains in Spotify; OzAmp is a controller. Local EQ/balance do not
 - **Modified:** `winlite.h`
 
 ---
-
-## Unreleased — changes since 1.0.0 (TEST38)
-
-### TEST38 — Karaoke lyrics
-
-- Added KARAOKE toggle beside Lyrics for a centered large-text view in the same native Spotify window.
-- Preserve library tab, search and scroll when returning; keep transport available without restarting music.
-- Highlight synchronized lines, support manual scrolling/Sync and display plain lyrics honestly when timing is unavailable.
-- Hide inactive library hit targets and search field in karaoke, pause hidden-library auto-refresh and repaint on lyric-line changes.
-- Added karaoke round-trip and geometry regression tests.
-
-### TEST37 corrections after Windows feedback
-
-- Preserve art, lyrics, EQ and other panels at startup/reconnect; do not overwrite their saved visibility during large-mode transitions.
-- Replace stretched UI bitmaps with physical-pixel text/primitives and DPI-sized fonts.
-- Native resizable/maximizable window with title bar, minimize/restore/close controls and taskbar access.
-- Reuse OzAmp skin colors and font family; show more rows as the window grows.
-- Add Restore Panels recovery action for settings previously hidden by TEST36.
-
-### Added
-
-- Spotify authorization, playback control, Recent / Playlists / Queue / Devices and device switching.
-- Unified fullscreen workspace with artwork, lyrics, library navigation and one transport bar; F11/F8/Esc switch to/from compact mode without restarting playback.
-- Windows DPAPI-encrypted saved login and background session restoration.
-- Loaded-item search, supported pagination, per-tab caches and timed refresh.
-- LRCLIB synchronized/plain lyrics and online artwork lookup/cache.
-- Automatic/manual stable GitHub release checks and in-app update/download workflow.
-- 28 EQ choices with grouped menus and preserved preset IDs.
-
-### Changed and fixed
-
-- Spotify connection preserves existing panels; only explicitly opening the large workspace temporarily hides them.
-- Client ID persistence, atomic refresh-token rotation and write-error reporting.
-- Separate empty results from API failures; retain cached data after errors, respect retry delays and reject stale asynchronous results.
-- Clearer output-device status and fallback/error feedback.
-- Correct object output paths and clean builds to prevent stale-object linking.
-- Browser fixtures, offline Windows session-storage tests and fullscreen layout/hit tests.
-- Refreshed README, privacy information and release documentation.
-
-See [PACKAGE_NOTES.md](PACKAGE_NOTES.md) for the consolidated changes, compatibility and test limits. The Windows updater assigns the public version at publication time.
 
 ## 1.0.0 — First public release
 

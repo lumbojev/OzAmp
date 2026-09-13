@@ -1,6 +1,6 @@
-> See [changes since 1.0.0](PACKAGE_NOTES.md) and the [Windows test checklist](TEST38_NOTES.md). The supplied EXE is TEST38; the Windows release updater selects the public version and rebuilds it through CI.
+> OzAmp 1.0.2 fixes Windows compatibility metadata and release preparation. The Spotify workspace, persistent sign-in and karaoke lyrics view remain available. See [the release notes](RELEASE_NOTES.md).
 
-## Karaoke lyrics view — TEST38
+## Karaoke lyrics view
 
 Click **KARAOKE** beside Lyrics in the Spotify workspace to show large centered lyrics in the same window. Click the same button again to restore the library and sidebar lyrics with the previous tab, search text and list position. Transport controls remain available; mode changes send no playback/restart commands.
 
@@ -49,7 +49,7 @@ Client ID persists; saved login is encrypted with Windows DPAPI. Disconnect remo
 ## Screenshot
 
 <p align="center">
-  <img src="docs/assets/ozamp-screenshot.png" alt="OzAmp 1.0.1 running on Windows" width="720">
+  <img src="docs/assets/ozamp-screenshot.png" alt="OzAmp running on Windows" width="720">
 </p>
 
 ## Why OzAmp?
@@ -75,17 +75,17 @@ It is deliberately built as a native Windows desktop application rather than a b
 - No account requirement, telemetry or analytics
 
 <!-- OZAMP_CURRENT_RELEASE_START -->
-## Current release — 1.0.1
+## Current release — 1.0.2
 
-OzAmp **1.0.1** is the current stable release.
+OzAmp **1.0.2** is the current stable release.
 
-**[Download OzAmp 1.0.1 →](https://github.com/lumbojev/OzAmp/releases/tag/v1.0.1)**
+**[Download OzAmp 1.0.2 →](https://github.com/lumbojev/OzAmp/releases/tag/v1.0.2)**
 
-### What changed since 1.0.0
+### What changed since 1.0.1
 
 - Latest tested OzAmp source promoted to a stable GitHub release
-- Application, build script and Windows CI version synchronized to **1.0.1**
-- **24** repository paths changed since the previous stable tag
+- Application, build script and Windows CI version synchronized to **1.0.2**
+- **33** repository paths changed since the previous stable tag
 - Release notes, changelog, checksum and source archive regenerated for this release
 
 For the complete change list, see [RELEASE_NOTES.md](RELEASE_NOTES.md) and [CHANGELOG.md](CHANGELOG.md).
@@ -98,19 +98,19 @@ The recommended way to install or update OzAmp is through the latest GitHub rele
 
 **[Download the latest OzAmp release →](https://github.com/lumbojev/OzAmp/releases/latest)**
 
-For v1.0.1 specifically:
+For v1.0.2 specifically:
 
-**[Download OzAmp-1.0.1.exe](https://github.com/lumbojev/OzAmp/releases/download/v1.0.1/OzAmp-1.0.1.exe)**
+**[Download OzAmp-1.0.2.exe](https://github.com/lumbojev/OzAmp/releases/download/v1.0.2/OzAmp-1.0.2.exe)**
 
 > Windows may show a SmartScreen warning for an unsigned independent executable. Verify the SHA-256 checksum published with the release if desired.
 
 ## Platform
 
-OzAmp 1.0.1 targets **64-bit Windows**. Windows 10 and Windows 11 are the intended desktop environments.
+OzAmp 1.0.2 targets **64-bit Windows**. Windows 10 and Windows 11 are the intended desktop environments.
 
 ## Build from source
 
-LLVM/Clang for Windows is required. From a Developer Command Prompt or terminal where `clang-cl` and `lld-link` are available:
+LLVM/Clang for Windows and Python 3 are required. From a Developer Command Prompt or terminal where `clang-cl`, `lld-link` and `python` are available:
 
 ```bat
 build_windows_llvm.bat
@@ -119,7 +119,7 @@ build_windows_llvm.bat
 Expected output:
 
 ```text
-OzAmp-1.0.1.exe
+OzAmp-1.0.2.exe
 ```
 
 A GitHub Actions workflow in `.github/workflows/build-windows.yml` performs the same Windows x64 build in CI.
@@ -132,6 +132,8 @@ A GitHub Actions workflow in `.github/workflows/build-windows.yml` performs the 
 | `audio_engine.cpp/.h` | WASAPI / Media Foundation playback and PCM processing |
 | `winlite.h` | Compact Windows ABI/header surface used by the project |
 | `ozamp.ico` / `ozamp.res` | Application icon and compiled Windows resource |
+| `ozamp.manifest` | Windows compatibility, privilege and DPI declarations embedded in the executable |
+| `tools/verify_exe.py` | Checks embedded manifest, version information and icons after linking |
 | `skins/` | Bundled `.ozskin` themes |
 | `docs/ARCHITECTURE.md` | High-level implementation overview |
 | `TEST_CHECKLIST.md` | Release smoke-test checklist |

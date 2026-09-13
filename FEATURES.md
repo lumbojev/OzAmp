@@ -8,7 +8,7 @@
 - 28 EQ choices with grouped presets
 - Automatic/manual stable release checks and update workflow
 
-See [PACKAGE_NOTES.md](PACKAGE_NOTES.md) for changes since 1.0.0 and limitations.
+See [CHANGELOG.md](CHANGELOG.md) for changes since 1.0.0 and [PACKAGE_NOTES.md](PACKAGE_NOTES.md) for the current maintenance release.
 
 
 - Native C++ / Win32 desktop player

@@ -1,2 +1,3 @@
 #include "resource.h"
 IDI_OZAMP ICON "ozamp.ico"
+1 24 "ozamp.manifest"
